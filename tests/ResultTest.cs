@@ -1,95 +1,88 @@
+using FriendlyResult.Tests.Helpers;
+
 namespace FriendlyResult.Tests;
 
 public class ResultTest
 {
     [Fact]
-    public void Error_ShouldConvertToResult()
+    public void GenericType_ShouldAssignmentIntoTValue()
     {
-        // Arrange 
-        Error error = new Error("Teste.Code", "Testando", TypeErrorEnum.NotFound);
+        // Arrange
+        int intValue = 10;
+        double doubleValue = 10.0;
+        string stringValue = "Something";
+        float floatValue = 10.3f;
 
         // Act
-        Result result = error;
+        Result<int> resultInt = intValue;
+        Result<double> resultDouble = doubleValue;
+        Result<string> resultString = stringValue;
+        Result<float> resultFloat = floatValue;
+        Result<Success> resultSuccess = ResultState.Success;
 
         // Assert
-        result.Errors.Should().Contain(error);
+        resultInt.Value.Should<int>().Be(intValue);
+        resultInt.IsError.Should().BeFalse();
+
+        resultDouble.Value.Should<double>().Be(doubleValue);
+        resultDouble.IsError.Should().BeFalse();
+
+        resultString.Value.Should<string>().Be(stringValue);
+        resultString.IsError.Should().BeFalse();
+
+        resultFloat.Value.Should<float>().Be(floatValue);
+        resultFloat.IsError.Should().BeFalse();
+
+        resultSuccess.Value.Should().Be(ResultState.Success);
+    }
+
+    [Fact]
+    public void Error_ShouldConvertToResult()
+    {
+        // Arrange
+        Error error = new Error("Code", "Description", TypeErrorEnum.Validation);
+
+        // Act
+        Result<double> result = error;
+
+        // Assert
         result.IsError.Should().BeTrue();
+        result.Errors.Should().Contain(error);
     }
 
     [Fact]
     public void ListErrors_ShouldConvertToResult()
     {
         // Arrange
-        List<Error> errors = Helpers.Fixture.ErrorFactory.CreateList(5);
+        List<Error> errors = Fixture.ErrorFactory.CreateList(5);
 
         // Act
-        Result result = errors;
+        Result<double> result = errors;
 
         // Assert
+        result.IsError.Should().BeTrue();
         result.Errors.Should().Contain(errors);
-        result.IsError.Should().BeTrue();
     }
 
     [Fact]
-    public void ResultState_WhenTypeBeFailure_ShouldReturnErrors()
+    public void MatchFirst_WhenOnErrorFirstInvoked_ShouldReturnFirstError()
     {
         // Arrange
-        ResultState resultEnum = ResultState.Failure;
+        List<Error> errors = Fixture.ErrorFactory.CreateList(5);
 
-        // Act
-        Result result = resultEnum;
+        Result<double> result = errors;
 
-        // Assert
-        result.IsError.Should().BeTrue();
-        result.Errors.Should().HaveCount(1);
-    }
-
-    [Fact]
-    public void ResultState_WhenTypeBeSuccess_ShouldReturnNoErrors()
-    {
-        // Arrange
-        ResultState resultEnum = ResultState.Success;
-
-        // Act
-        Result result = resultEnum;
-
-        // Assert
-        result.IsError.Should().BeFalse();
-        result.Errors.Should().HaveCount(0);
-    }
-
-    [Fact]
-    public void ResultState_WhenInvalidRange_ShouldThrowException()
-    {
-        // Arrange
-        ResultState? ResultState = null;
-
-        // Act
-        Action act = () => { Result result = ResultState; };
-
-        // Assert
-        act.Should().ThrowExactly<InvalidOperationException>();
-    }
-
-    [Fact]
-    public void MatchFirst_WhenFirstErrorInvoked_ShouldReturnFirstError()
-    {
-        // Arrange
-        Error error = Helpers.Fixture.ErrorFactory.Create();
-
-        Result result = error;
-
-        bool onFirstError(Error error)
+        bool onFirstError(Error errors)
         {
-            error.Should().Be(error);
+            errors.Should().BeEquivalentTo(result.Errors[0]);
             return true;
         }
 
-        bool onAction() => throw new Exception("Should not be called.");
+        bool onValue(double _) => throw new Exception("Should not be called.");
 
         // Act
         Func<bool> act = () => result.MatchFirst(
-            onAction,
+            onValue,
             onFirstError
         );
 
@@ -98,16 +91,23 @@ public class ResultTest
     }
 
     [Fact]
-    public void MatchFirst_WhenActionInvoked_ShouldBeCall()
+    public void MatchFirst_WhenOnValueInvoked_ShouldReturnValue()
     {
         // Arrange
-        Result result = ResultState.Success;
-        bool onAction() => true;
+        Guid value = Guid.NewGuid();
+
+        Result<Guid> result = value;
+
         bool onFirstError(Error _) => throw new Exception("Should not be called.");
+        bool onValue(Guid valueParam)
+        {
+            valueParam.Should().Be(value);
+            return true;
+        }
 
         // Act
         Func<bool> act = () => result.MatchFirst(
-            onAction,
+            onValue,
             onFirstError
         );
 
@@ -119,19 +119,22 @@ public class ResultTest
     public void Match_WhenOnErrorsInvoked_ShouldReturnErrorsList()
     {
         // Arrange
-        var errors = Helpers.Fixture.ErrorFactory.CreateList(5);
-        Result result = errors;
-        bool onAction() => throw new Exception("Should not be called.");
-        bool onErrorsList(IReadOnlyList<Error> errorsParam)
+        List<Error> errors = Fixture.ErrorFactory.CreateList(5);
+
+        Result<Guid> result = errors;
+
+        bool onErrors(IReadOnlyList<Error> errors)
         {
-            errorsParam.Should().ContainInConsecutiveOrder(errors);
+            errors.Should().BeEquivalentTo(errors);
             return true;
         }
 
+        bool onValue(Guid _) => throw new Exception("");
+
         // Act
         Func<bool> act = () => result.Match(
-            onAction,
-            onErrorsList
+            onValue,
+            onErrors
         );
 
         // Assert
@@ -139,17 +142,23 @@ public class ResultTest
     }
 
     [Fact]
-    public void Match_WhenOnActionInvoked_ShouldBeCall()
+    public void Match_WhenOnValueInvoked_ShouldReturnValue()
     {
         // Arrange
-        Result result = ResultState.Success;
+        Guid value = Guid.NewGuid();
 
-        bool onAction() => true;
+        Result<Guid> result = value;
+
         bool onErrors(IReadOnlyList<Error> _) => throw new Exception("Should not be called.");
+        bool onValue(Guid valueParam)
+        {
+            valueParam.Should().Be(value);
+            return true;
+        }
 
         // Act
         Func<bool> act = () => result.Match(
-            onAction,
+            onValue,
             onErrors
         );
 

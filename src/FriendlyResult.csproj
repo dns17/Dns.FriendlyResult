@@ -8,6 +8,8 @@
 		<Version>8.0.1</Version>
 		<Authors>Danilo Santana</Authors>
 		<PackageOutputPath>../artifacts/</PackageOutputPath>
+		<PackageDescription>Result Pattern from RestAPI.</PackageDescription>
+		<RepositoryUrl>https://https://github.com/dnslowlavelcode/Dns.FriendlyResult</RepositoryUrl>
 	</PropertyGroup>
 
 </Project>

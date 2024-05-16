@@ -1,0 +1,25 @@
+name: Publish FriendlyResult to Nuget Package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/FriendlyResult.csproj"
+jobs:
+  publish:
+    name: Pack & Publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Package
+        run: dotnet pack -c Release src/FriendlyResult.csproj
+      - name: Publish
+        run: dotnet nuget push artifacts/*.nupkg  --api-key ${{ secrets.FRIENDLYRESULT  }} --source "github" --skip-duplicate

@@ -20,6 +20,6 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Package
-        run: dotnet pack -c Release src/FriendlyResult.csproj -v
+        run: dotnet pack -c Release src/FriendlyResult.csproj -v d
       - name: Publish
         run: dotnet nuget push artifacts/*.nupkg --source "github" --skip-duplicate -v

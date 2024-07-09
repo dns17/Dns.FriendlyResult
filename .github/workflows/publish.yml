@@ -23,6 +23,4 @@ jobs:
         run: dotnet pack -c Release src/FriendlyResult.csproj
         
       - name: Publish
-        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ env.GITHUB_TOKEN }} --source "github" --skip-duplicate
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.GITHUBPACKAGESECRETS }} --source "github" --skip-duplicate

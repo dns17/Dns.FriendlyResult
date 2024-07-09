@@ -5,7 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PackageId>Dns.FriendlyResult</PackageId>
-		<Version>8.0.2-preview</Version>
+		<Version>8.0.3-preview</Version>
 		<Authors>Danilo Santana</Authors>
 		<PackageOutputPath>../artifacts/</PackageOutputPath>
 		<PackageDescription>Result Pattern from RestAPI.</PackageDescription>

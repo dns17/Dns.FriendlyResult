@@ -23,4 +23,4 @@ jobs:
         run: dotnet pack -c Release src/FriendlyResult.csproj
         
       - name: Publish
-        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.GITHUBPACKAGESECRETS }} --source https://nuget.pkg.github.com/dnslowlavelcode/index.json --skip-duplicate
+        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.GITHUBPACKAGESECRETS }} --source "github" --skip-duplicate

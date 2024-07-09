@@ -16,11 +16,25 @@ public partial class Result<TValue> : IResult
         return IsError ? onFirstError(Errors.First()) : onValue(Value);
     }
 
+    public TNextValue MatchFirst<TNextValue>(
+        Func<TNextValue> onValue,
+        Func<Error, TNextValue> onFirstError
+    ){
+        return IsError ? onFirstError(Errors.First()) : onValue();
+    }
+
     public TNextValue Match<TNextValue>(
         Func<TValue, TNextValue> onValue,
         Func<IReadOnlyList<Error>, TNextValue> onErrors)
     {
         return IsError ? onErrors(Errors) : onValue(Value);
+    }
+
+    public TNextValue Match<TNextValue>(
+        Func<TNextValue> onValue,
+        Func<IReadOnlyList<Error>, TNextValue> onErrors)
+    {
+        return IsError ? onErrors(Errors) : onValue();
     }
 
     private Result(TValue value)

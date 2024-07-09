@@ -26,4 +26,4 @@ jobs:
       #   run: dotnet nuget add source --username dnslowlavelcode --password ${{ secrets.FRIENDLYRESULT }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/dnslowlavelcode/index.json"
       
       - name: Publish
-        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.FRIENDLYRESULT }} --source https://nuget.pkg.github.com/dnslowlavelcode/index.json --skip-duplicate
+        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.GITHUBPACKAGESECRETS }} --source https://nuget.pkg.github.com/dnslowlavelcode/index.json --skip-duplicate

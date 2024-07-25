@@ -19,7 +19,8 @@ public partial class Result<TValue> : IResult
     public TNextValue MatchFirst<TNextValue>(
         Func<TNextValue> onValue,
         Func<Error, TNextValue> onFirstError
-    ){
+    )
+    {
         return IsError ? onFirstError(Errors.First()) : onValue();
     }
 
@@ -36,6 +37,8 @@ public partial class Result<TValue> : IResult
     {
         return IsError ? onErrors(Errors) : onValue();
     }
+
+    private Result() { }
 
     private Result(TValue value)
     {
@@ -65,5 +68,10 @@ public partial class Result<TValue> : IResult
     public static implicit operator Result<TValue>(List<Error> errors)
     {
         return new Result<TValue>(errors);
+    }
+
+    public static implicit operator Result<TValue>(Empty result)
+    {
+        return new Result<TValue>();
     }
 }

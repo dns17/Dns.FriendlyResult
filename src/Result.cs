@@ -9,6 +9,8 @@ public partial class Result<TValue> : IResult
     public TValue Value { get; } = default!;
     public bool IsError => Errors.Any();
 
+    public Error? FirstError => Errors.First();
+
     public TNextValue MatchFirst<TNextValue>(
         Func<TValue, TNextValue> onValue,
         Func<Error, TNextValue> onFirstError)

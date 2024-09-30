@@ -5,9 +5,9 @@ namespace FriendlyResult;
 
 public class Error : IError
 {
-    public string Code { get; private set; }
-    public string Description { get; private set; }
-    public TypeErrorEnum TypeError { get; set; }
+    public string Code { get; init; }
+    public string Description { get; init; }
+    public TypeErrorEnum TypeError { get; init; }
 
     public Error(
         string code,

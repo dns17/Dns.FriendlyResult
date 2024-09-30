@@ -26,6 +26,4 @@ public static class ResultExtension
         return destination;
     }
 
-    public static Error FirstError(this Result<Error> result) => result.Errors.First();
-
 }

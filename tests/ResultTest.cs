@@ -165,4 +165,31 @@ public class ResultTest
         // Assert
         act.Should().NotThrow().Subject.Should().BeTrue();
     }
+
+    [Fact]
+    public void FirstError_ShouldReturnFirstError()
+    {
+        // Arrange
+        Result<Guid> result = Error.NotFound();
+
+        // Act
+        Error? error = result.FirstError;
+
+        // Assert
+        error.Should().NotBeNull();
+        error.Should().BeEquivalentTo(Error.NotFound());
+    }
+
+    [Fact]
+    public void FirstError_ShouldReturnNullable()
+    {
+        // Arrange
+        Result<Guid> result = Guid.NewGuid();
+
+        // Act
+        Error? error = result.FirstError;
+
+        // Assert
+        error.Should().BeNull();
+    }
 }

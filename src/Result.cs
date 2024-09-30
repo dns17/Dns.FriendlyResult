@@ -1,4 +1,3 @@
-using FriendlyResult.Enums;
 using FriendlyResult.Interfaces;
 
 namespace FriendlyResult;
@@ -9,7 +8,8 @@ public partial class Result<TValue> : IResult
     public TValue Value { get; } = default!;
     public bool IsError => Errors.Any();
 
-    public Error? FirstError => Errors.First();
+    public Error? FirstError =>
+        Errors?.FirstOrDefault();
 
     public TNextValue MatchFirst<TNextValue>(
         Func<TValue, TNextValue> onValue,
@@ -40,8 +40,6 @@ public partial class Result<TValue> : IResult
         return IsError ? onErrors(Errors) : onValue();
     }
 
-    private Result() { }
-
     private Result(TValue value)
     {
         Value = value;
@@ -57,6 +55,7 @@ public partial class Result<TValue> : IResult
         Errors.AddRange(errors);
     }
 
+
     public static implicit operator Result<TValue>(TValue value)
     {
         return new Result<TValue>(value);
@@ -70,10 +69,5 @@ public partial class Result<TValue> : IResult
     public static implicit operator Result<TValue>(List<Error> errors)
     {
         return new Result<TValue>(errors);
-    }
-
-    public static implicit operator Result<TValue>(Empty result)
-    {
-        return new Result<TValue>();
     }
 }

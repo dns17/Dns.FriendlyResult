@@ -2,7 +2,7 @@ using FriendlyResult.Extensions;
 
 namespace FriendlyResult.Tests;
 
-public class ResultExtensionTest
+public class ResultExtensionTests
 {
 
     [Fact]

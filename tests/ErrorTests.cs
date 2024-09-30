@@ -1,8 +1,6 @@
-using System.Xml.Serialization;
-
 namespace FriendlyResult.Tests;
 
-public class ErrorTest
+public class ErrorTests
 {
     [Fact]
     public void NotFound_MustDefaultValues()

@@ -2,7 +2,7 @@ using FriendlyResult.Tests.Helpers;
 
 namespace FriendlyResult.Tests;
 
-public class ResultTest
+public class ResultTests
 {
     [Fact]
     public void GenericType_ShouldAssignmentIntoTValue()

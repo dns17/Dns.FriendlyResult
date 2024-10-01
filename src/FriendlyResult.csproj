@@ -5,11 +5,12 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PackageId>Dns.FriendlyResult</PackageId>
-		<Version>8.0.7</Version>
+		<Version>8.0.8</Version>
 		<Authors>Danilo Santana</Authors>
 		<PackageOutputPath>../artifacts/</PackageOutputPath>
 		<PackageDescription>Result Pattern from RestAPI.</PackageDescription>
 		<RepositoryUrl>https://https://github.com/dns17/Dns.FriendlyResult</RepositoryUrl>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
 </Project>

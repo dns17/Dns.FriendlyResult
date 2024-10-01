@@ -64,7 +64,6 @@ public partial class Result<TValue> : IResult
     /// Chama expressão lambada de acordo com o status do resultado. Caso for bem sucessedido, irá chamar o onValue senão onErrors.
     /// </summary>
     /// <param name="onValue"></param>
-    /// <param name="Func<IReadOnlyList<Error>"></param>
     /// <param name="onErrors"></param>
     public TNextValue Match<TNextValue>(
         Func<TNextValue> onValue,

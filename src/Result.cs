@@ -1,3 +1,4 @@
+using FriendlyResult.Common;
 using FriendlyResult.Interfaces;
 
 namespace FriendlyResult;
@@ -8,8 +9,10 @@ namespace FriendlyResult;
 /// 
 public partial class Result<TValue> : IResult
 {
+    private readonly List<Error> _errors = [];
+
     /// <inheritdoc/>
-    public List<Error> Errors { get; } = new();
+    public IReadOnlyList<Error> Errors => _errors;
 
     /// <inheritdoc/>
     public TValue Value { get; } = default!;
@@ -79,14 +82,18 @@ public partial class Result<TValue> : IResult
 
     private Result(Error error)
     {
-        Errors.Add(error);
+        _errors.Add(error);
     }
 
     private Result(List<Error> errors)
     {
-        Errors.AddRange(errors);
+        _errors.AddRange(errors);
     }
 
+    private Result(IReadOnlyList<Error> errors)
+    {
+        _errors.AddRange(errors);
+    }
 
     public static implicit operator Result<TValue>(TValue value)
     {
@@ -101,5 +108,10 @@ public partial class Result<TValue> : IResult
     public static implicit operator Result<TValue>(List<Error> errors)
     {
         return new Result<TValue>(errors);
+    }
+
+    public static implicit operator Result<TValue>(ContractBase contract)
+    {
+        return new Result<TValue>(contract.Errors);
     }
 }

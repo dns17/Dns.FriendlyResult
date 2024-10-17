@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "src/FriendlyResult.csproj"
+      - "src/**"
 jobs:
   publish:
     name: Pack & Publish

@@ -8,7 +8,7 @@ public partial class Contract<TValue> : ContractBase
     {
         if (value is null)
         {
-            Error.Validation(code, message);
+            _errors.Add(Error.Validation(code, message));
         }
 
         return this;
@@ -18,7 +18,7 @@ public partial class Contract<TValue> : ContractBase
     {
         if (value.CompareTo(comparison) > 0)
         {
-            Error.Validation(code, message);
+            _errors.Add(Error.Validation(code, message));
         }
 
         return this;
@@ -29,7 +29,7 @@ public partial class Contract<TValue> : ContractBase
     {
         if (value.CompareTo(comparison) >= 0)
         {
-            Error.Validation(code, message);
+            _errors.Add(Error.Validation(code, message));
         }
 
         return this;
@@ -40,7 +40,7 @@ public partial class Contract<TValue> : ContractBase
     {
         if (value.CompareTo(comparison) < 0)
         {
-            Error.Validation(code, message);
+            _errors.Add(Error.Validation(code, message));
         }
 
         return this;
@@ -51,7 +51,7 @@ public partial class Contract<TValue> : ContractBase
     {
         if (value.CompareTo(comparison) <= 0)
         {
-            Error.Validation(code, message);
+            _errors.Add(Error.Validation(code, message));
         }
 
         return this;

@@ -10,7 +10,7 @@ public static class ResultExtension
 
         if (result.IsError)
         {
-            destination = result.Errors;
+            destination = result.Errors.ToList();
             return destination;
         }
 

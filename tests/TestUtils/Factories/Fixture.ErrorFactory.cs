@@ -1,4 +1,8 @@
-namespace FriendlyResult.Tests.Helpers;
+using FriendlyResult;
+
+using Tests.TestUtils.Constaints;
+
+namespace Tests.TestUtils.Factories;
 
 public partial class Fixture
 {

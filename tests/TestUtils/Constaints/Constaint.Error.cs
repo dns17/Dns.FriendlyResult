@@ -1,5 +1,4 @@
-namespace FriendlyResult.Tests.Helpers;
-
+namespace Tests.TestUtils.Constaints;
 public partial class Constaint
 {
     public static class Error

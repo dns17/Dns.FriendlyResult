@@ -1,4 +1,5 @@
-using FriendlyResult.Tests.Helpers;
+using Tests.TestUtils.Inhents;
+using Tests.TestUtils.Factories;
 
 namespace FriendlyResult.Tests;
 
@@ -167,7 +168,7 @@ public class ResultTests
     }
 
     [Fact]
-    public void FirstError_ShouldReturnFirstError()
+    public void FirstError_ShouldReturnFirstError
     {
         // Arrange
         Result<Guid> result = Error.NotFound();
@@ -191,5 +192,19 @@ public class ResultTests
 
         // Assert
         error.Should().BeNull();
+    }
+
+    [Fact]
+    public void ClassB_ShouldBeAssignableToClassA_WhenInheriting()
+    {
+        // Arrange
+        Result<ClassA> resultA = null!;
+
+        // Act
+        resultA = new ClassB();
+
+        // Assert
+        resultA.Should().NotBeNull();
+        resultA.Should().BeAssignableTo<ClassB>();
     }
 }

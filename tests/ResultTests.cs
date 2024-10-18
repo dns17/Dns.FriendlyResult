@@ -168,7 +168,7 @@ public class ResultTests
     }
 
     [Fact]
-    public void FirstError_ShouldReturnFirstError
+    public void FirstError_ShouldReturnFirstError()
     {
         // Arrange
         Result<Guid> result = Error.NotFound();

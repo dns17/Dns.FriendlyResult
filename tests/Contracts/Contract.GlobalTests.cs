@@ -3,7 +3,7 @@ using FriendlyResult.Contracts;
 
 namespace Tests.Contracts;
 
-public class GlobalTests
+public partial class Contract
 {
     [Fact]
     public void IsNull_ShouldTriggerValidationError_WhenValueIsNull()
